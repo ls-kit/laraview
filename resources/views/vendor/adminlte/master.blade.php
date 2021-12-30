@@ -76,8 +76,11 @@
 <body class="@yield('classes_body')" @yield('body_data')>
 
     {{-- Body Content --}}
-    @yield('body')
+    <div id="app">
+        @yield('body')
+    </div>
 
+    <script src="{{ mix('js/app.js') }}"></script>
     {{-- Base Scripts --}}
     @if(!config('adminlte.enabled_laravel_mix'))
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
@@ -103,6 +106,8 @@
 
     {{-- Custom Scripts --}}
     @yield('adminlte_js')
+
+
 
 </body>
 
