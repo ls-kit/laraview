@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboradController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+/*
+|--------------------------------------------------------------------------
+| Backend routes
+|--------------------------------------------------------------------------
+| Here goes all backend routes
+*/
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
+    Route::get('/dashboad', [DashboradController::class, 'index'])->name('dashboad');
+});
+
