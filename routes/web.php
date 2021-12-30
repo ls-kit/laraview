@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\Backend\DashboradController;
+use App\Http\Controllers\Backend\GenerateReviewController;
+use App\Http\Controllers\Backend\ReviewController;
+use App\Http\Controllers\Backend\SettingController;
+use App\Http\Controllers\Backend\TokenController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +35,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
     Route::get('/dashboad', [DashboradController::class, 'index'])->name('dashboad');
+    Route::resource('/token', TokenController::class);
+    Route::resource('/review', ReviewController::class);
+    Route::resource('/generate-review', GenerateReviewController::class);
+    Route::resource('/setting', SettingController::class);
 });
 

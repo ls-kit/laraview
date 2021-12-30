@@ -264,11 +264,11 @@ return [
             'submenu' => [
                 [
                     'text' => 'Add Review',
-                    'url'  => '/',
+                    'url'  => '/review/create',
                 ],
                 [
                     'text' => 'Review List',
-                    'url'  => '/',
+                    'url'  => '/review',
                 ]
             ],
 
@@ -284,18 +284,6 @@ return [
             'text'        => 'Setting',
             'url'         => '/setting',
             'icon'        => 'fas fa-cog',
-        ],
-
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
         ],
 
     ],
