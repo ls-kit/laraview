@@ -14,7 +14,7 @@ class TokenController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.token.index');
+        // return view('backend.pages.token.index');
     }
 
     /**

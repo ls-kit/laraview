@@ -1,12 +1,4 @@
-@extends('adminlte::page')
-
-@section('title', 'Dashboard')
-
-@section('content_header')
-<h1>Token</h1>
-@stop
-
-@section('content')
+<template lang="">
     <!-- token field  -->
     <section class="content">
         <div class="container-fluid">
@@ -133,5 +125,15 @@
                     <!-- /.card -->
                 </div>
             </div>
+        </div>
+</div>
     </section>
-@stop
+</template>
+<script>
+export default {
+
+}
+</script>
+<style lang="">
+
+</style>

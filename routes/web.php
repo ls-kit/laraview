@@ -6,6 +6,7 @@ use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\TokenController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,7 @@ Auth::routes();
 */
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/{any}', [DashboardController::class, 'index'])->where('any', '.*');
 
 Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboad');

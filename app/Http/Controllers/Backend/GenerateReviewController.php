@@ -14,7 +14,7 @@ class GenerateReviewController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.generate-review.index');
+        // return view('backend.pages.generate-review.index');
     }
 
     /**

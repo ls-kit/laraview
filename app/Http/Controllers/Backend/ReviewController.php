@@ -14,7 +14,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.review.index');
+        // return view('backend.pages.review.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        return view('backend.pages.review.create');
+        // return view('backend.pages.review.create');
     }
 
     /**

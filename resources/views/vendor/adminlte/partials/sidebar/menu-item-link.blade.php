@@ -1,7 +1,10 @@
+{{-- @php
+    dd($item);
+@endphp --}}
 <li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item">
 
-    <a class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"
-       href="{{ $item['href'] }}" @isset($item['target']) target="{{ $item['target'] }}" @endisset
+    <router-link class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"
+       to="{{ $item['url'] }}" @isset($item['target']) target="{{ $item['target'] }}" @endisset
        {!! $item['data-compiled'] ?? '' !!}>
 
         <i class="{{ $item['icon'] ?? 'far fa-fw fa-circle' }} {{
@@ -18,6 +21,6 @@
             @endisset
         </p>
 
-    </a>
+    </router-link>
 
 </li>

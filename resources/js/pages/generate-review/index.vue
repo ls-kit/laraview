@@ -1,12 +1,4 @@
-@extends('adminlte::page')
-
-@section('title', 'Dashboard')
-
-@section('content_header')
-    <h1>Generate Review</h1>
-@stop
-
-@section('content')
+<template lang="">
 <section class="content">
     <div class="container-fluid">
       <div class="row">
@@ -51,5 +43,11 @@
           <!-- /.card -->
         </div>
       </div>
+      </div>
   </section>
-@stop
+</template>
+<script>
+export default {};
+</script>
+<style lang="">
+</style>

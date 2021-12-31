@@ -248,7 +248,7 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'url'         => '/dashboad',
+            'url'         => '/dashboard',
             'icon'        => 'fas fa-tachometer-alt',
             // 'label'       => 4,
             // 'label_color' => 'success',
