@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TokenController extends Controller
 {
@@ -35,7 +37,14 @@ class TokenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'token_name' => 'required'
+        ]);
+        $token = new Token();
+        $token->token_name = $request->token_name;
+        $token->user_id = Auth::user()->id;
+        $token->save();
+        return $token;
     }
 
     /**

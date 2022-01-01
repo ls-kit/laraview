@@ -15,6 +15,8 @@ class CreateTokensTable extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
+            $table->string('token_name');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

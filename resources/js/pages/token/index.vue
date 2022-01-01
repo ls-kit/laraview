@@ -8,12 +8,12 @@
                         <div class="card-header">
                             <h3 class="card-title">Add Token</h3>
                         </div>
-                        <form>
+                        <form @submit.prevent="handleForm">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Enter Token Text</label>
                                     <input type="text" class="form-control" id="exampleInputEmail1"
-                                        placeholder="Enter Token">
+                                        placeholder="Enter Token" v-model="form.token_name">
                                 </div>
                             </div>
                             <div class="card-footer">
@@ -130,8 +130,31 @@
     </section>
 </template>
 <script>
+import axios from 'axios'
 export default {
+    data() {
+        return {
+            form: {
+                token_name: ''
+            }
+        }
+    },
+    methods: {
+        handleForm() {
+            axios.post('/token', this.form).then((res) => {
+                if(res.data){
+                    this.form.token_name = "";
 
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'New Token Added!'
+                    })
+
+
+                }
+            })
+        }
+    }
 }
 </script>
 <style lang="">

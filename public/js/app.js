@@ -5801,6 +5801,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5932,7 +5934,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      form: {
+        token_name: ''
+      }
+    };
+  },
+  methods: {
+    handleForm: function handleForm() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/token', this.form).then(function (res) {
+        if (res.data) {
+          _this.form.token_name = "";
+          Toast.fire({
+            icon: 'success',
+            title: 'New Token Added!'
+          });
+        }
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -30349,23 +30375,24 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "card card-primary card-outline" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [_vm._v("Add Token")]),
-              ]),
-              _vm._v(" "),
-              _c("form", [
+  return _c("section", { staticClass: "content" }, [
+    _c("div", { staticClass: "container-fluid" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "card card-primary card-outline" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function ($event) {
+                    $event.preventDefault()
+                    return _vm.handleForm.apply(null, arguments)
+                  },
+                },
+              },
+              [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "exampleInputEmail1" } }, [
@@ -30373,318 +30400,348 @@ var staticRenderFns = [
                     ]),
                     _vm._v(" "),
                     _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.form.token_name,
+                          expression: "form.token_name",
+                        },
+                      ],
                       staticClass: "form-control",
                       attrs: {
                         type: "text",
                         id: "exampleInputEmail1",
                         placeholder: "Enter Token",
                       },
+                      domProps: { value: _vm.form.token_name },
+                      on: {
+                        input: function ($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.form, "token_name", $event.target.value)
+                        },
+                      },
                     }),
                   ]),
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary btn-sm",
-                      attrs: { type: "submit" },
-                    },
-                    [_vm._v("Add Token")]
-                  ),
-                ]),
+                _vm._m(1),
+              ]
+            ),
+          ]),
+        ]),
+        _vm._v(" "),
+        _vm._m(2),
+      ]),
+    ]),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h3", { staticClass: "card-title" }, [_vm._v("Add Token")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary btn-sm", attrs: { type: "submit" } },
+        [_vm._v("Add Token")]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("h3", { staticClass: "card-title" }, [_vm._v("All Token List")]),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body table-responsive p-0" }, [
+          _c("table", { staticClass: "table table-hover text-nowrap" }, [
+            _c("thead", [
+              _c("tr", [
+                _c("th", [_vm._v("ID")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("User")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Date")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Status")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Actions")]),
               ]),
             ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-8" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h3", { staticClass: "card-title" }, [
-                  _vm._v("All Token List"),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [_vm._v("183")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("John Doe")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("11-7-2014")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "tag tag-success" }, [
+                    _vm._v("Approved"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("div", { staticClass: "dropdown show" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-default btn-sm dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          id: "dropdownMenuLink",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false",
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                                    Action\n                                                "
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dropdown-menu",
+                        attrs: { "aria-labelledby": "dropdownMenuLink" },
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Delete")]
+                        ),
+                      ]
+                    ),
+                  ]),
                 ]),
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card-body table-responsive p-0" }, [
-                _c("table", { staticClass: "table table-hover text-nowrap" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("ID")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("User")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Date")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Status")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Actions")]),
-                    ]),
+              _c("tr", [
+                _c("td", [_vm._v("219")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Alexander Pierce")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("11-7-2014")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "tag tag-warning" }, [
+                    _vm._v("Pending"),
                   ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [_vm._v("183")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("John Doe")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("11-7-2014")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "tag tag-success" }, [
-                          _vm._v("Approved"),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", { staticClass: "dropdown show" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "btn btn-default btn-sm dropdown-toggle",
-                              attrs: {
-                                href: "#",
-                                role: "button",
-                                id: "dropdownMenuLink",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false",
-                              },
-                            },
-                            [
-                              _vm._v(
-                                "\n                                                    Action\n                                                "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dropdown-menu",
-                              attrs: { "aria-labelledby": "dropdownMenuLink" },
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Edit")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Delete")]
-                              ),
-                            ]
-                          ),
-                        ]),
-                      ]),
-                    ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("div", { staticClass: "dropdown show" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-default btn-sm dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          id: "dropdownMenuLink",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false",
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                                    Action\n                                                "
+                        ),
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("219")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Alexander Pierce")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("11-7-2014")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "tag tag-warning" }, [
-                          _vm._v("Pending"),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", { staticClass: "dropdown show" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "btn btn-default btn-sm dropdown-toggle",
-                              attrs: {
-                                href: "#",
-                                role: "button",
-                                id: "dropdownMenuLink",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false",
-                              },
-                            },
-                            [
-                              _vm._v(
-                                "\n                                                    Action\n                                                "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dropdown-menu",
-                              attrs: { "aria-labelledby": "dropdownMenuLink" },
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Edit")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Delete")]
-                              ),
-                            ]
-                          ),
-                        ]),
-                      ]),
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dropdown-menu",
+                        attrs: { "aria-labelledby": "dropdownMenuLink" },
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Delete")]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [_vm._v("657")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Bob Doe")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("11-7-2014")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "tag tag-primary" }, [
+                    _vm._v("Approved"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("div", { staticClass: "dropdown show" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-default btn-sm dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          id: "dropdownMenuLink",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false",
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                                    Action\n                                                "
+                        ),
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("657")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Bob Doe")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("11-7-2014")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "tag tag-primary" }, [
-                          _vm._v("Approved"),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", { staticClass: "dropdown show" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "btn btn-default btn-sm dropdown-toggle",
-                              attrs: {
-                                href: "#",
-                                role: "button",
-                                id: "dropdownMenuLink",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false",
-                              },
-                            },
-                            [
-                              _vm._v(
-                                "\n                                                    Action\n                                                "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dropdown-menu",
-                              attrs: { "aria-labelledby": "dropdownMenuLink" },
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Edit")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Delete")]
-                              ),
-                            ]
-                          ),
-                        ]),
-                      ]),
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dropdown-menu",
+                        attrs: { "aria-labelledby": "dropdownMenuLink" },
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Delete")]
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", [_vm._v("175")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("Mike Doe")]),
+                _vm._v(" "),
+                _c("td", [_vm._v("11-7-2014")]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("span", { staticClass: "tag tag-danger" }, [
+                    _vm._v("Denied"),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c("div", { staticClass: "dropdown show" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-default btn-sm dropdown-toggle",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          id: "dropdownMenuLink",
+                          "data-toggle": "dropdown",
+                          "aria-haspopup": "true",
+                          "aria-expanded": "false",
+                        },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                                    Action\n                                                "
+                        ),
+                      ]
+                    ),
                     _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [_vm._v("175")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Mike Doe")]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("11-7-2014")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "tag tag-danger" }, [
-                          _vm._v("Denied"),
-                        ]),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("div", { staticClass: "dropdown show" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "btn btn-default btn-sm dropdown-toggle",
-                              attrs: {
-                                href: "#",
-                                role: "button",
-                                id: "dropdownMenuLink",
-                                "data-toggle": "dropdown",
-                                "aria-haspopup": "true",
-                                "aria-expanded": "false",
-                              },
-                            },
-                            [
-                              _vm._v(
-                                "\n                                                    Action\n                                                "
-                              ),
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "dropdown-menu",
-                              attrs: { "aria-labelledby": "dropdownMenuLink" },
-                            },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Edit")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item",
-                                  attrs: { href: "#" },
-                                },
-                                [_vm._v("Delete")]
-                              ),
-                            ]
-                          ),
-                        ]),
-                      ]),
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "dropdown-menu",
+                        attrs: { "aria-labelledby": "dropdownMenuLink" },
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                          },
+                          [_vm._v("Delete")]
+                        ),
+                      ]
+                    ),
                   ]),
                 ]),
               ]),
