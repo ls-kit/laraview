@@ -18,6 +18,11 @@ class TokenController extends Controller
     {
         // return view('backend.pages.token.index');
     }
+    public function tokenList()
+    {
+        $tokens = Token::all();
+        return response($tokens);
+    }
 
     /**
      * Show the form for creating a new resource.

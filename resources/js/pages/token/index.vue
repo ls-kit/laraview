@@ -134,12 +134,22 @@ import axios from 'axios'
 export default {
     data() {
         return {
+            tokenList: {},
             form: {
                 token_name: ''
             }
         }
     },
+    mounted() {
+        this.getTokenList()
+    },
     methods: {
+        async getTokenList() {
+                await axios.get('/token-list').then((res) => {
+                    this.tokenList = res.data
+                })
+        },
+
         handleForm() {
             axios.post('/token', this.form).then((res) => {
                 if(res.data){
@@ -154,6 +164,8 @@ export default {
                 }
             })
         }
+
+
     }
 }
 </script>

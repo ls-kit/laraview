@@ -34,6 +34,8 @@ Auth::routes();
 */
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/{any}', [DashboardController::class, 'index'])->where('any', '.*');
+
 Route::get('/{token}', [DashboardController::class, 'index'])->where('token', 'token');
 Route::get('/{dashboard}', [DashboardController::class, 'index'])->where('dashboard', 'dashboard');
 Route::get('/{review}', [DashboardController::class, 'index'])->where('review', 'review');
@@ -42,6 +44,7 @@ Route::get('/{setting}', [DashboardController::class, 'index'])->where('setting'
 
 
 Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
+    Route::get('/token-list', [TokenController::class, 'tokenList']);
     Route::resource('/token', TokenController::class);
     Route::resource('/review', ReviewController::class);
     Route::resource('/generate-review', GenerateReviewController::class);
