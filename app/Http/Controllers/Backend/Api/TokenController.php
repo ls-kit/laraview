@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Token;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class ReviewController extends Controller
+class TokenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,17 +16,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        // return view('backend.pages.review.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return view('backend.pages.review.create');
+        //
     }
 
     /**
@@ -35,7 +27,14 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'token_name' => 'required'
+        ]);
+        $token = new Token();
+        $token->token_name = $request->token_name;
+        $token->user_id = Auth::user()->id;
+        $token->save();
+        return $token;
     }
 
     /**
@@ -45,17 +44,6 @@ class ReviewController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
