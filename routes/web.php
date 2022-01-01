@@ -35,14 +35,3 @@ Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/{any}', [DashboardController::class, 'index'])->where('any', '.*');
-
-Route::get('/api/check-login', [AuthCheckController::class, 'checkIsLogin']);
-
-Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboad');
-    Route::resource('/token', TokenController::class);
-    Route::resource('/review', ReviewController::class);
-    Route::resource('/generate-review', GenerateReviewController::class);
-    Route::resource('/setting', SettingController::class);
-});
-
