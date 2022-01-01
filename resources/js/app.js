@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+import axios from 'axios';
 import Vue from 'vue';
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -30,6 +31,18 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import router from "./router"
 Vue.use(VueRouter);
+
+// navigation gurd chack
+router.beforeEach((to, from, next) => {
+    if(to.meta.requiresAuth){
+        console.log(to);
+       axios.get('/api/check-login').then((res) => {
+           console.log(res);
+       });
+    }
+
+        next()
+})
 
 const app = new Vue({
     router,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\AuthCheckController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\GenerateReviewController;
 use App\Http\Controllers\Backend\ReviewController;
@@ -34,6 +35,8 @@ Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/{any}', [DashboardController::class, 'index'])->where('any', '.*');
+
+Route::get('/api/check-login', [AuthCheckController::class, 'checkIsLogin']);
 
 Route::group(['middleware' => ['auth'], 'as' => 'backend.'], function(){
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboad');

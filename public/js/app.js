@@ -5446,7 +5446,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -5945,9 +5944,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -5968,6 +5969,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
 
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]));
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -5976,9 +5978,20 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('example-component', (__we
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]); // navigation gurd chack
+
+_router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
+  if (to.meta.requiresAuth) {
+    console.log(to);
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/check-login').then(function (res) {
+      console.log(res);
+    });
+  }
+
+  next();
+});
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
-  router: _router__WEBPACK_IMPORTED_MODULE_1__["default"],
+  router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
   el: '#app'
 });
 
@@ -6049,7 +6062,10 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__["default"]({
   mode: "history",
   routes: [{
     path: '/dashboard',
-    component: _pages_dashboard__WEBPACK_IMPORTED_MODULE_0__["default"]
+    component: _pages_dashboard__WEBPACK_IMPORTED_MODULE_0__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/token',
     component: _pages_token__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -46082,6 +46098,18 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	

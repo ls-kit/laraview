@@ -12,7 +12,8 @@ const router = new VueRouter({
     [
         {
             path: '/dashboard',
-            component: Dashboard
+            component: Dashboard,
+            meta: {requiresAuth: true}
         },
         {
             path: '/token',
