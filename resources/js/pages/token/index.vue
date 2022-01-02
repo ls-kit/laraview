@@ -41,11 +41,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <span class="btn-sm btn-worning"></span>
                                     <tr v-for="token in tokenList.data" :key="token.id">
                                         <td>{{token.id}}</td>
                                         <td>{{token.user.name}}</td>
-                                        <td>{{token.created_at}}</td>
-                                        <td>{{token.status == 0 ? 'pending': 'active'}}</td>
+                                        <td>{{new Date(token.created_at).toLocaleString()}}</td>
+                                        <td v-if="token.status == 0"><span class="btn-sm btn-warning">Pending</span></td>
+                                        <td v-else><span class="btn-sm btn-success">Active</span></td>
                                         <td>
                                         <div class="dropdown show">
                                         <a  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-sm dropdown-toggle">Action</a>
@@ -77,7 +79,6 @@ export default {
         return {
             editMode: false,
             editId: '',
-            deleteId: '',
             form: {
                 token_name: "",
             },

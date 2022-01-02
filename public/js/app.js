@@ -5893,13 +5893,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       editMode: false,
       editId: '',
-      deleteId: '',
       form: {
         token_name: ""
       },
@@ -31876,79 +31877,99 @@ var render = function () {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.tokenList.data, function (token) {
-                      return _c("tr", { key: token.id }, [
-                        _c("td", [_vm._v(_vm._s(token.id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(token.user.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(token.created_at))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(token.status == 0 ? "pending" : "active")
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "dropdown show" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn btn-default btn-sm dropdown-toggle",
-                                attrs: {
-                                  role: "button",
-                                  id: "dropdownMenuLink",
-                                  "data-toggle": "dropdown",
-                                  "aria-haspopup": "true",
-                                  "aria-expanded": "false",
-                                },
-                              },
-                              [_vm._v("Action")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "dropdown-menu",
-                                attrs: {
-                                  "aria-labelledby": "dropdownMenuLink",
-                                },
-                              },
-                              [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.editToken(token.id)
-                                      },
-                                    },
-                                  },
-                                  [_vm._v("Edit")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    on: {
-                                      click: function ($event) {
-                                        return _vm.deleteToken(token.id)
-                                      },
-                                    },
-                                  },
-                                  [_vm._v("Delete")]
-                                ),
-                              ]
+                    [
+                      _c("span", { staticClass: "btn-sm btn-worning" }),
+                      _vm._v(" "),
+                      _vm._l(_vm.tokenList.data, function (token) {
+                        return _c("tr", { key: token.id }, [
+                          _c("td", [_vm._v(_vm._s(token.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(token.user.name))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                new Date(token.created_at).toLocaleString()
+                              )
                             ),
                           ]),
-                        ]),
-                      ])
-                    }),
-                    0
+                          _vm._v(" "),
+                          token.status == 0
+                            ? _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "btn-sm btn-warning" },
+                                  [_vm._v("Pending")]
+                                ),
+                              ])
+                            : _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "btn-sm btn-success" },
+                                  [_vm._v("Active")]
+                                ),
+                              ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "dropdown show" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-default btn-sm dropdown-toggle",
+                                  attrs: {
+                                    role: "button",
+                                    id: "dropdownMenuLink",
+                                    "data-toggle": "dropdown",
+                                    "aria-haspopup": "true",
+                                    "aria-expanded": "false",
+                                  },
+                                },
+                                [_vm._v("Action")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "dropdown-menu",
+                                  attrs: {
+                                    "aria-labelledby": "dropdownMenuLink",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.editToken(token.id)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Edit")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.deleteToken(token.id)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Delete")]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                        ])
+                      }),
+                    ],
+                    2
                   ),
                   _vm._v(" "),
                   _c("pagination", {
