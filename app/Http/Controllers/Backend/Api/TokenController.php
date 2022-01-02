@@ -21,7 +21,7 @@ class TokenController extends Controller
      */
     public function index()
     {
-        $tokens = Token::with('user')->paginate(5);
+        $tokens = Token::with('user')->orderBy('id', 'DESC')->paginate(5);
         return response($tokens);
     }
 

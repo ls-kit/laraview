@@ -27,6 +27,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::apiResource('token', TokenController::class);
     Route::apiResource('generate-review', GenerateReviewController::class);
     Route::apiResource('setting', SettingController::class);
-    Route::apiResource('reiview', ReviewController::class);
+    Route::apiResource('review', ReviewController::class);
 
 });

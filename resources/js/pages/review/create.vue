@@ -27,14 +27,7 @@
               <h3 class="card-title">Token List</h3>
             </div>
             <div class="card-body">
-              <button class="btn btn-sm btn-default btn-block mb-2 token" value="[token_1]">Token 1</button>
-              <button class="btn btn-sm btn-primary btn-block mb-2 token" value="[token_2]">Token 2</button>
-              <button class="btn btn-sm btn-secondary btn-block mb-2 token" value="[token_3]">Token 3</button>
-              <button class="btn btn-sm btn-info btn-block mb-2 token" value="[token_4]">Token 4</button>
-              <button class="btn btn-sm btn-danger btn-block mb-2 token" value="[token_5]">Token 5</button>
-              <button class="btn btn-sm btn-success btn-block mb-2 token" value="[token_6]">Token 6</button>
-              <button class="btn btn-sm btn-warning btn-block mb-2 token" value="[token_7]">Token 7</button>
-              <button class="btn btn-sm btn-primary btn-block mb-2 token" value="[token_8]">Token 8</button>
+              <button v-for="token in tokenList" class="btn btn-sm btn-default btn-block mb-2 token" :value="token.id">{{token.token_name}}</button>
             </div>
           </div>
         </div>
@@ -44,7 +37,26 @@
     </div>
 </template>
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+    data() {
+        return {
+            tokenList: {},
+
+        }
+    },
+    created() {
+        this.getTokenList();
+    },
+    methods: {
+       async getTokenList() {
+           await axios.get('/api/review').then((res) => {
+               this.tokenList = res.data.data
+           })
+       }
+    }
+};
 </script>
 <style lang="">
 </style>

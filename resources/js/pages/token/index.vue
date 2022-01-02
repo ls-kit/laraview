@@ -34,6 +34,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
+                                        <th>Token</th>
                                         <th>User</th>
                                         <th>Date</th>
                                         <th>Status</th>
@@ -44,6 +45,7 @@
                                     <span class="btn-sm btn-worning"></span>
                                     <tr v-for="token in tokenList.data" :key="token.id">
                                         <td>{{token.id}}</td>
+                                        <td>{{token.token_name}}</td>
                                         <td>{{token.user.name}}</td>
                                         <td>{{new Date(token.created_at).toLocaleString()}}</td>
                                         <td v-if="token.status == 0"><span class="btn-sm btn-warning">Pending</span></td>

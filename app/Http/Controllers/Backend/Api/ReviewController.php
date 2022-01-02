@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TokenCollection;
+use App\Models\Token;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -14,7 +16,10 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $tokenList = Token::all();
+
+        return new TokenCollection($tokenList);
+
     }
 
     /**
