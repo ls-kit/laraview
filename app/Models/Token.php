@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Token extends Model
 {
     use HasFactory;
+
+    /**
+     * Get the user associated with the Token
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belogsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

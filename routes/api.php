@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::group(['middleware' => 'auth:sanctum'], function() {
+Route::group(['middleware' => 'auth'], function() {
 
     Route::apiResource('token', TokenController::class);
     Route::apiResource('generate-review', GenerateReviewController::class);

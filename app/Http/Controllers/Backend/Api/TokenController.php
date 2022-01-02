@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use JeroenNoten\LaravelAdminLte\Components\Tool\Datatable;
+use Yajra\DataTables\Facades\DataTables;
 
 class TokenController extends Controller
 {
@@ -16,7 +18,8 @@ class TokenController extends Controller
      */
     public function index()
     {
-        //
+        $tokens = Token::with('user')->get();
+        return DataTables($tokens)->make(true);
     }
 
     /**

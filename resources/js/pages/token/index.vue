@@ -30,7 +30,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
-                            <table class="table table-hover text-nowrap">
+                            <table id="myTable" class="table table-hover text-nowrap">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
@@ -41,82 +41,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>183</td>
-                                        <td>John Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-success">Approved</span></td>
-                                        <td>
-                                            <div class="dropdown show">
-                                                <a class="btn btn-default btn-sm dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Action
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>219</td>
-                                        <td>Alexander Pierce</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-warning">Pending</span></td>
-                                        <td>
-                                            <div class="dropdown show">
-                                                <a class="btn btn-default btn-sm dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Action
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>657</td>
-                                        <td>Bob Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-primary">Approved</span></td>
-                                        <td>
-                                            <div class="dropdown show">
-                                                <a class="btn btn-default btn-sm dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Action
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>175</td>
-                                        <td>Mike Doe</td>
-                                        <td>11-7-2014</td>
-                                        <td><span class="tag tag-danger">Denied</span></td>
-                                        <td>
-                                            <div class="dropdown show">
-                                                <a class="btn btn-default btn-sm dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Action
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Edit</a>
-                                                    <a class="dropdown-item" href="#">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -131,6 +55,8 @@
 </template>
 <script>
 import axios from 'axios'
+import $ from 'jquery'
+
 export default {
     data() {
         return {
@@ -139,9 +65,47 @@ export default {
             }
         }
     },
+    created() {
+        this.getTokenList()
+    },
     methods: {
+        getTokenList() {
+            $(document).ready( function () {
+            $.noConflict();
+            $('#myTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "api/token",
+                "columns": [
+                    { "data": "id" },
+                    { "data": "user.name" },
+                    { "data": "created_at" },
+                    { "data": "status" },
+                    { 'data': null,
+                      wrap: true,
+                      "render": function (item) {
+                        return '<div class="dropdown"><button id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-sm dropdown-toggle">Action</button> <div aria-labelledby="dropdownMenuLink" class="dropdown-menu" style=""><button data-id="'+item.id+'" class="dropdown-item edit">Edit</button> <button class="dropdown-item delete" data-id="'+item.id+'">Delete</button></div></div>'
+                      }
+                    },
+                ],
+
+                "bDestroy": true,
+                "pageLength": 5
+            });
+        });
+
+        // edit row
+        $(document).on('click', '.edit', function(){
+            let id = $(this).data('id');
+            axios.put('api/token/'+id).then((res) => {
+                console.log(res);
+            })
+            
+        })
+
+        },
         handleForm() {
-            axios.post('/token', this.form).then((res) => {
+            axios.post('api/token', this.form).then((res) => {
                 if(res.data){
                     this.form.token_name = "";
 
@@ -149,7 +113,7 @@ export default {
                         icon: 'success',
                         title: 'New Token Added!'
                     })
-
+                    this.getTokenList();
 
                 }
             })
