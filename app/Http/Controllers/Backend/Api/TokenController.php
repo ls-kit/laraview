@@ -18,8 +18,8 @@ class TokenController extends Controller
      */
     public function index()
     {
-        $tokens = Token::with('user')->get();
-        return DataTables($tokens)->make(true);
+        $tokens = Token::with('user')->paginate(5);
+        return response($tokens);
     }
 
     /**
@@ -48,7 +48,8 @@ class TokenController extends Controller
      */
     public function show($id)
     {
-        //
+        $token = Token::findOrFail($id);
+        return response($token);
     }
 
     /**
@@ -60,7 +61,10 @@ class TokenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tokenUpdate = Token::find($id);
+        $tokenUpdate->token_name = $request->token_name;
+        $tokenUpdate->save();
+        return response($tokenUpdate);
     }
 
     /**
@@ -71,6 +75,8 @@ class TokenController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $deleteToken = Token::findOrFail($id);
+        $deleteToken->delete();
+        return response(['status' => 200]);
     }
 }

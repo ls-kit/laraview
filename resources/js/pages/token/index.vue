@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary btn-sm">Add Token</button>
+                                <button type="submit" :class="editMode ? 'btn-warning' : 'btn-primary'" class="btn  btn-sm">{{editMode ? 'Update': 'Add Token'}}</button>
                             </div>
                         </form>
                     </div>
@@ -41,7 +41,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr v-for="token in tokenList.data" :key="token.id">
+                                        <td>{{token.id}}</td>
+                                        <td>{{token.user.name}}</td>
+                                        <td>{{token.created_at}}</td>
+                                        <td>{{token.status == 0 ? 'pending': 'active'}}</td>
+                                        <td>
+                                        <div class="dropdown show">
+                                        <a  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-sm dropdown-toggle">Action</a>
+                                        <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                                            <button @click="editToken(token.id)" class="dropdown-item">Edit</button>
+                                            <button @click="deleteToken(token.id)" class="dropdown-item">Delete</button>
+                                        </div>
+                                        </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
+                                <pagination :data="tokenList" @pagination-change-page="getResults"></pagination>
                             </table>
                         </div>
                         <!-- /.card-body -->
@@ -54,73 +70,105 @@
     </section>
 </template>
 <script>
-import axios from 'axios'
-import $ from 'jquery'
+import axios from "axios";
 
 export default {
     data() {
         return {
+            editMode: false,
+            editId: '',
+            deleteId: '',
             form: {
-                token_name: ''
-            }
-        }
+                token_name: "",
+            },
+            tokenList: {},
+        };
     },
     created() {
-        this.getTokenList()
+        this.getTokenList();
     },
     methods: {
-        getTokenList() {
-            $(document).ready( function () {
-            $.noConflict();
-            $('#myTable').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "ajax": "api/token",
-                "columns": [
-                    { "data": "id" },
-                    { "data": "user.name" },
-                    { "data": "created_at" },
-                    { "data": "status" },
-                    { 'data': null,
-                      wrap: true,
-                      "render": function (item) {
-                        return '<div class="dropdown"><button id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default btn-sm dropdown-toggle">Action</button> <div aria-labelledby="dropdownMenuLink" class="dropdown-menu" style=""><button data-id="'+item.id+'" class="dropdown-item edit">Edit</button> <button class="dropdown-item delete" data-id="'+item.id+'">Delete</button></div></div>'
-                      }
-                    },
-                ],
-
-                "bDestroy": true,
-                "pageLength": 5
-            });
-        });
-
-        // edit row
-        $(document).on('click', '.edit', function(){
-            let id = $(this).data('id');
-            axios.put('api/token/'+id).then((res) => {
+        async getTokenList() {
+            await axios.get("api/token").then((res) => {
                 console.log(res);
-            })
-            
-        })
-
+                this.tokenList = res.data;
+            });
         },
+
+        getResults(page) {
+            if (typeof page === "undefined") {
+                page = 1;
+            }
+            axios.get("api/token?page=" + page).then((response) => {
+                this.tokenList = response.data;
+            });
+        },
+
         handleForm() {
-            axios.post('api/token', this.form).then((res) => {
-                if(res.data){
+            if(this.editMode){
+                axios.put("api/token/"+this.editId, this.form).then((res) => {
+                    if (res.data) {
+                        this.editId = ''
+                        this.editMode = false;
+                        this.form.token_name = "";
+
+                        Toast.fire({
+                            icon: "success",
+                            title: "Selected Token Updated!",
+                        });
+                        this.getTokenList();
+                    }
+                });
+            }else{
+            axios.post("api/token", this.form).then((res) => {
+                if (res.data) {
                     this.form.token_name = "";
 
                     Toast.fire({
-                        icon: 'success',
-                        title: 'New Token Added!'
-                    })
+                        icon: "success",
+                        title: "New Token Added!",
+                    });
                     this.getTokenList();
-
                 }
-            })
-        }
-    }
-}
-</script>
-<style lang="">
+            });
 
-</style>
+            }
+
+        },
+
+       async editToken(id){
+            await axios.get('api/token/'+id).then((res) => {
+                this.form.token_name = res.data.token_name;
+                this.editMode = true;
+                this.editId = id;
+            })
+
+        },
+        deleteToken(id){
+
+           Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete('api/token/'+id).then((res) => {
+                    this.getTokenList();
+                })
+                Swal.fire(
+                'Deleted!',
+                'Your token has been deleted.',
+                'success'
+                )
+            }
+            })
+        },
+
+
+    },
+};
+</script>
