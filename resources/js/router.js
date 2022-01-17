@@ -5,7 +5,7 @@ import Review from "./pages/review";
 import CreateReview from "./pages/review/create.vue";
 import GenerateReview from "./pages/generate-review";
 import Setting from "./pages/setting";
-
+import UpdateReview from "./pages/review/update";
 const router = new VueRouter({
     mode: "history",
     routes:
@@ -22,6 +22,11 @@ const router = new VueRouter({
         {
             path: '/review',
             component: Review
+        },
+        {
+            path: '/review/:id/edit',
+            component: UpdateReview,
+            name: 'update-review'
         },
         {
             path: '/review/create',

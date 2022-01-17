@@ -50,6 +50,7 @@ export default {
   },
   created() {
     this.getTokenList();
+    this.getReview();
   },
   methods: {
     async getTokenList() {
@@ -57,13 +58,21 @@ export default {
         this.tokenList = res.data.data;
       });
     },
+    async getReview() {
+        await axios.get("/api/review/"+this.$route.params.id).then((res) => {
+            // this.from.review_body = res.data;
+            this.form.review_body = res.data
+            console.log(res);
+        })
+    },
     async handleForm() {
-      await axios.post("/api/review", this.form).then((res) => {
+      await axios.put("/api/review/"+this.$route.params.id, this.form).then((res) => {
         console.log(res);
         Toast.fire({
           icon: "success",
-          title: "Review added!",
+          title: "Review Updated!",
         });
+        this.$router.push("/review")
       });
     },
     changeSelected(event) {

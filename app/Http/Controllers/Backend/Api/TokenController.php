@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use JeroenNoten\LaravelAdminLte\Components\Tool\Datatable;
 use Yajra\DataTables\Facades\DataTables;
-
+use Str;
 use function PHPSTORM_META\map;
 
 class TokenController extends Controller
@@ -38,6 +38,7 @@ class TokenController extends Controller
         ]);
         $token = new Token();
         $token->token_name = $request->token_name;
+        $token->slug = Str::slug($request->token_name);
         $token->user_id = Auth::user()->id;
         $token->save();
         return $token;
@@ -66,6 +67,7 @@ class TokenController extends Controller
     {
         $tokenUpdate = Token::find($id);
         $tokenUpdate->token_name = $request->token_name;
+        $tokenUpdate->slug = Str::slug($request->token_name);
         $tokenUpdate->save();
         return response($tokenUpdate);
     }

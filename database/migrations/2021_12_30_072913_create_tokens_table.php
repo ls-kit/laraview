@@ -17,6 +17,7 @@ class CreateTokensTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->string('token_name');
+            $table->string('slug');
             $table->integer('status')->default(0);
             $table->timestamps();
         });
