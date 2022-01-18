@@ -5703,6 +5703,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5733,6 +5734,37 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    deleteReview: function deleteReview(id) {
+      var _this2 = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          axios["delete"]('api/review/' + id).then(function (res) {
+            _this2.getReviews();
+          });
+          Swal.fire('Deleted!', 'Your review has been deleted.', 'success');
+        }
+      });
+    },
+    getResults: function getResults(page) {
+      var _this3 = this;
+
+      if (typeof page === "undefined") {
+        page = 1;
+      }
+
+      axios.get("api/token?page=" + page).then(function (response) {
+        _this3.tokenList = response.data;
+      });
     }
   }
 });
@@ -5844,7 +5876,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context2.next = 2;
                 return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/review/" + _this2.$route.params.id).then(function (res) {
-                  // this.from.review_body = res.data;
                   _this2.form.review_body = res.data;
                   console.log(res);
                 });
@@ -5885,18 +5916,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     changeSelected: function changeSelected(event) {
-      console.log("test"); // obtain the object reference for the textarea>
-
-      var txtarea = document.getElementById("review-editor"); // obtain the index of the first selected character
-
-      var start = txtarea.selectionStart; // obtain the index of the last selected character
-
-      var finish = txtarea.selectionEnd; //obtain all Text
-
-      var allText = txtarea.value; // obtain the selected text
-
-      var sel = allText.substring(start, finish); //append te text;
-
+      console.log("test");
+      var txtarea = document.getElementById("review-editor");
+      var start = txtarea.selectionStart;
+      var finish = txtarea.selectionEnd;
+      var allText = txtarea.value;
+      var sel = allText.substring(start, finish);
       var newText = allText.substring(0, start) + "[" + event.target.value + "]" + allText.substring(finish, allText.length);
       txtarea.value = newText;
       this.form.review_body = newText;
@@ -31399,89 +31424,119 @@ var render = function () {
               _vm._m(0),
               _vm._v(" "),
               _c("div", { staticClass: "card-body table-responsive p-0" }, [
-                _c("table", { staticClass: "table table-hover text-nowrap" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.reviews, function (review) {
-                      return _c("tr", [
-                        _c("td", [_vm._v(_vm._s(review.id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(review.user_id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(review.created_at))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("span", { staticClass: "tag tag-success" }, [
-                            _vm._v(_vm._s(review.status)),
-                          ]),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", { staticClass: "dropdown show" }, [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "btn btn-default btn-sm dropdown-toggle",
-                                attrs: {
-                                  href: "#",
-                                  role: "button",
-                                  id: "dropdownMenuLink",
-                                  "data-toggle": "dropdown",
-                                  "aria-haspopup": "true",
-                                  "aria-expanded": "false",
-                                },
-                              },
-                              [
-                                _vm._v(
-                                  "\n                        Action\n                        "
-                                ),
-                              ]
+                _c(
+                  "table",
+                  { staticClass: "table table-hover text-nowrap" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.reviews, function (review) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(review.id))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(review.user_id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(
+                                new Date(review.created_at).toLocaleString()
+                              )
                             ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "dropdown-menu",
-                                attrs: {
-                                  "aria-labelledby": "dropdownMenuLink",
-                                },
-                              },
-                              [
+                          ]),
+                          _vm._v(" "),
+                          review.status
+                            ? _c("td", [
                                 _c(
-                                  "router-link",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: {
-                                      to: {
-                                        name: "update-review",
-                                        params: { id: review.id },
+                                  "span",
+                                  { staticClass: "btn-sm btn-success" },
+                                  [_vm._v("Active")]
+                                ),
+                              ])
+                            : _c("td", [
+                                _c(
+                                  "span",
+                                  { staticClass: "btn-sm btn-danger" },
+                                  [_vm._v("Deactive")]
+                                ),
+                              ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", { staticClass: "dropdown show" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn btn-default btn-sm dropdown-toggle",
+                                  attrs: {
+                                    href: "#",
+                                    role: "button",
+                                    id: "dropdownMenuLink",
+                                    "data-toggle": "dropdown",
+                                    "aria-haspopup": "true",
+                                    "aria-expanded": "false",
+                                  },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                        Action\n                        "
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "dropdown-menu",
+                                  attrs: {
+                                    "aria-labelledby": "dropdownMenuLink",
+                                  },
+                                },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: {
+                                        to: {
+                                          name: "update-review",
+                                          params: { id: review.id },
+                                        },
                                       },
                                     },
-                                  },
-                                  [_vm._v("Edit")]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "dropdown-item",
-                                    attrs: { href: "#" },
-                                  },
-                                  [_vm._v("Delete")]
-                                ),
-                              ],
-                              1
-                            ),
+                                    [_vm._v("Edit")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      on: {
+                                        click: function ($event) {
+                                          return _vm.deleteReview(review.id)
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("Delete")]
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]),
                           ]),
-                        ]),
-                      ])
+                        ])
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("pagination", {
+                      attrs: { data: _vm.reviews },
+                      on: { "pagination-change-page": _vm.getResults },
                     }),
-                    0
-                  ),
-                ]),
+                  ],
+                  1
+                ),
               ]),
             ]),
           ]),
@@ -31643,8 +31698,8 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-footer" }, [
       _c(
         "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Add Review")]
+        { staticClass: "btn btn-warning", attrs: { type: "submit" } },
+        [_vm._v("Update Review")]
       ),
     ])
   },

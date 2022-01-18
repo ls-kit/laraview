@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button  type="submit" class="btn btn-primary">Add Review</button>
+                <button  type="submit" class="btn btn-warning">Update Review</button>
               </div>
             </form>
           </div>
@@ -60,7 +60,6 @@ export default {
     },
     async getReview() {
         await axios.get("/api/review/"+this.$route.params.id).then((res) => {
-            // this.from.review_body = res.data;
             this.form.review_body = res.data
             console.log(res);
         })
@@ -77,18 +76,12 @@ export default {
     },
     changeSelected(event) {
       console.log("test");
-      // obtain the object reference for the textarea>
       var txtarea = document.getElementById("review-editor");
-      // obtain the index of the first selected character
       var start = txtarea.selectionStart;
-      // obtain the index of the last selected character
       var finish = txtarea.selectionEnd;
-      //obtain all Text
       var allText = txtarea.value;
 
-      // obtain the selected text
       var sel = allText.substring(start, finish);
-      //append te text;
       var newText =
         allText.substring(0, start) +
         "[" +
