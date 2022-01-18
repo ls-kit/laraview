@@ -36,7 +36,9 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
-              Accordion
+             <div id="accordion">
+               helo
+            </div>
             </div>
             <!-- /.card-body -->
           </div>
@@ -47,7 +49,23 @@
   </section>
 </template>
 <script>
-export default {};
+export default {
+    data() {
+        return {
+            reviews: {}
+        }
+    },
+    mounted(){
+        this.getReviews();
+    },
+    methods:{
+        async getReviews() {
+            await axios.get('/api/review-list').then((res) => {
+                this.reviews = res.data.data
+            })
+        },
+    }
+};
 </script>
 <style lang="">
 </style>
