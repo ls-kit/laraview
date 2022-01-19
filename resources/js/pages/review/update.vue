@@ -45,6 +45,7 @@ export default {
       tokenList: {},
       form: {
         review_body: "",
+        tokens: ""
       },
     };
   },
@@ -91,6 +92,15 @@ export default {
 
       txtarea.value = newText;
       this.form.review_body = newText;
+
+      var text = newText;
+        var regex = /\[([^\][]*)]/g;
+        var results=[], m;
+        while ( m = regex.exec(text) ) {
+        results.push(m[1]);
+        }
+        console.log( results );
+        this.form.tokens = results;
     },
   },
 };

@@ -45,6 +45,7 @@ export default {
       tokenList: {},
       form: {
         review_body: "",
+        tokens: ""
       },
     };
   },
@@ -67,7 +68,6 @@ export default {
       });
     },
     changeSelected(event) {
-      console.log("test");
       // obtain the object reference for the textarea>
       var txtarea = document.getElementById("review-editor");
       // obtain the index of the first selected character
@@ -89,6 +89,16 @@ export default {
 
       txtarea.value = newText;
       this.form.review_body = newText;
+
+      var text = newText;
+        var regex = /\[([^\][]*)]/g;
+        var results=[], m;
+        while ( m = regex.exec(text) ) {
+        results.push(m[1]);
+        }
+        console.log( results );
+        this.form.tokens = results;
+
     },
   },
 };

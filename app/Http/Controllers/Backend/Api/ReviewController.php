@@ -8,6 +8,7 @@ use App\Models\Review;
 use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Concerns\ToArray;
 
 class ReviewController extends Controller
 {
@@ -21,6 +22,33 @@ class ReviewController extends Controller
         $tokenList = Token::all();
 
         return new TokenCollection($tokenList);
+
+    }
+    public function reviewSearch(Request $request)
+    {
+
+        $datas = collect($request->all())->keys()->toArray();
+        $con = json_encode($datas);
+
+        // return Review::where('tokens', $con)->get();
+        $reviews = Review::all();
+        $filterdData = [];
+
+        foreach($reviews as $review){
+            $tokens = json_decode($review->tokens);
+            $arr1 = $tokens;
+            $arr2 = $datas;
+            sort($arr1);
+            sort($arr2);
+            
+            if($arr1 == $arr2){
+                $filterdData[] = $review;
+            }
+        }
+
+        shuffle($filterdData);
+
+        return $filterdData;
 
     }
     /**
@@ -50,6 +78,7 @@ class ReviewController extends Controller
         $review = new Review();
         $review->user_id = Auth::user()->id;
         $review->body = $request->review_body;
+        $review->tokens = json_encode($request->tokens);
         $review->status = true;
         $review->save();
         return response($review);
