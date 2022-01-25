@@ -1,9 +1,6 @@
-{{-- @php
-    dd($item);
-@endphp --}}
 <li @isset($item['id']) id="{{ $item['id'] }}" @endisset class="nav-item">
 
-    <router-link class="nav-link {{ $item['class'] }} @isset($item['shift']) {{ $item['shift'] }} @endisset"
+    <router-link class="nav-link  @isset($item['shift']) {{ $item['shift'] }} @endisset"
        to="{{ $item['url'] }}" @isset($item['target']) target="{{ $item['target'] }}" @endisset
        {!! $item['data-compiled'] ?? '' !!}>
 
