@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\Api\GenerateReviewController;
 use App\Http\Controllers\Backend\Api\ReviewController;
 use App\Http\Controllers\Backend\Api\SettingController;
 use App\Http\Controllers\Backend\Api\TokenController;
+use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 // ** NOTE **
 // all api routes are useing web gurd under the hood
 Route::group(['middleware' => 'auth'], function() {
-
+    Route::get('dashboard', [DashboardController::class, 'getDashboardData']);
     Route::apiResource('token', TokenController::class);
     Route::apiResource('generate-review', GenerateReviewController::class);
     Route::apiResource('setting', SettingController::class);
