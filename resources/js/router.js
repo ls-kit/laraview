@@ -17,28 +17,34 @@ const router = new VueRouter({
         },
         {
             path: '/token',
-            component: Token
+            component: Token,
+            meta: {requiresAuth: true}
         },
         {
             path: '/review',
-            component: Review
+            component: Review,
+            meta: {requiresAuth: true}
         },
         {
             path: '/review/:id/edit',
             component: UpdateReview,
-            name: 'update-review'
+            name: 'update-review',
+            meta: {requiresAuth: true}
         },
         {
             path: '/review/create',
-            component: CreateReview
+            component: CreateReview,
+            meta: {requiresAuth: true}
         },
         {
             path: '/generate-review',
-            component: GenerateReview
+            component: GenerateReview,
+            meta: {requiresAuth: true}
         },
         {
             path: '/setting',
-            component: Setting
+            component: Setting,
+            meta: {requiresAuth: true}
         }
     ]
 })

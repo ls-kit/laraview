@@ -37,12 +37,14 @@ Vue.use(VueRouter);
 router.beforeEach((to, from, next) => {
     if(to.meta.requiresAuth){
         console.log(to);
-       axios.get('/api/check-login').then((res) => {
-           console.log(res);
+       axios.get('/api/check-auth').then((res) => {
+           if(res.data == 1){
+               next();
+           }else{
+                window.location.replace("/login");
+           }
        });
     }
-
-        next()
 })
 
 const app = new Vue({

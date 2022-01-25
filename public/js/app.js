@@ -6484,12 +6484,14 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
 _router__WEBPACK_IMPORTED_MODULE_2__["default"].beforeEach(function (to, from, next) {
   if (to.meta.requiresAuth) {
     console.log(to);
-    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/check-login').then(function (res) {
-      console.log(res);
+    axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/check-auth').then(function (res) {
+      if (res.data == 1) {
+        next();
+      } else {
+        window.location.replace("/login");
+      }
     });
   }
-
-  next();
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   router: _router__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -6571,23 +6573,41 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]({
     }
   }, {
     path: '/token',
-    component: _pages_token__WEBPACK_IMPORTED_MODULE_1__["default"]
+    component: _pages_token__WEBPACK_IMPORTED_MODULE_1__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/review',
-    component: _pages_review__WEBPACK_IMPORTED_MODULE_2__["default"]
+    component: _pages_review__WEBPACK_IMPORTED_MODULE_2__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/review/:id/edit',
     component: _pages_review_update__WEBPACK_IMPORTED_MODULE_6__["default"],
-    name: 'update-review'
+    name: 'update-review',
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/review/create',
-    component: _pages_review_create_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    component: _pages_review_create_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/generate-review',
-    component: _pages_generate_review__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _pages_generate_review__WEBPACK_IMPORTED_MODULE_4__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }, {
     path: '/setting',
-    component: _pages_setting__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _pages_setting__WEBPACK_IMPORTED_MODULE_5__["default"],
+    meta: {
+      requiresAuth: true
+    }
   }]
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);

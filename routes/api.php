@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Api\CheckAuthController;
 use App\Http\Controllers\Backend\Api\GenerateReviewController;
 use App\Http\Controllers\Backend\Api\ReviewController;
 use App\Http\Controllers\Backend\Api\SettingController;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+// ** NOTE **
+// all api routes are useing web gurd under the hood
 Route::group(['middleware' => 'auth'], function() {
 
     Route::apiResource('token', TokenController::class);
@@ -30,5 +33,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('review-list', [ReviewController::class, 'reviewList']);
     Route::post('review-search', [ReviewController::class, 'reviewSearch']);
     Route::apiResource('review', ReviewController::class);
-
 });
+
+Route::get('check-auth', [CheckAuthController::class, 'index']);
