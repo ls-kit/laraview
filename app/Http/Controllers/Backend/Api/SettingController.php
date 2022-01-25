@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SettingController extends Controller
@@ -14,7 +15,7 @@ class SettingController extends Controller
      */
     public function index()
     {
-        //
+        return User::find(auth()->user()->id);
     }
 
     /**
@@ -48,7 +49,18 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['nullable', 'confirmed']
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $request->password ? $user->password = bcrypt($request->password): '';
+        $user->save();
+        return response($user);
     }
 
     /**

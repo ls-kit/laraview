@@ -33,13 +33,19 @@
              <div id="accordion">
 
 
-<div class="block" v-for="review in reviews">
-  <input type="radio" name="city" :id="'city'+review.id" />
-  <label :for="'city'+review.id"><span>Samarkand</span></label>
-  <div class="info">
-    <textarea style="width:100%" rows="50" cols="20">{{review.body}}</textarea>
-  </div>
-</div>
+            <div class="block" v-for="review in reviews">
+            <input type="radio" name="city" :id="'city'+review.id" />
+
+            <label :for="'city'+review.id">
+                <span>{{review.body | truncate(70, ' ...')}}</span>
+                <button class="btn-sm btn-primary " @click="copyText('copy-'+review.id)">Copy</button>
+            </label>
+
+            <div class="info px-2">
+                {{review.body}}
+            </div>
+            <input :id="'copy-'+review.id" type="hidden" :value="review.body"></input>
+            </div>
 
 
             </div>
@@ -82,31 +88,21 @@ export default {
     mounted(){
         this.getTokens();
     },
+    filters: {
+        truncate: function (text, length, suffix) {
+            if (text.length > length) {
+                return text.substring(0, length) + suffix;
+            } else {
+                return text;
+            }
+        },
+    },
     methods:{
         async getTokens() {
             await axios.get('/api/token').then((res) => {
                 this.tokens = res.data.data
             })
         },
-
-
-        // handleContent(id) {
-        //     let data = this.reviews[id].body;
-        //     this.reviewId = id;
-
-        //     var text = data;
-        //     var regex = /\[([^\][]*)]/g;
-        //     var results=[], m;
-        //     while ( m = regex.exec(text) ) {
-        //     results.push(m[1]);
-        //     }
-        //     console.log( results );
-        //     var uniqueArray = results.filter(function(item, pos) {
-        //         return results.indexOf(item) == pos;
-        //     })
-        //     this.tokens = uniqueArray;
-
-        // },
         handleForm() {
             let convertedData = {}
             for(let item in this.form){
@@ -129,7 +125,25 @@ export default {
                     })
                 }
             })
-        }
+        },
+        copyText (id) {
+
+          let testingCodeToCopy = document.querySelector('#'+id)
+          testingCodeToCopy.setAttribute('type', 'text')    // 不是 hidden 才能複製
+          testingCodeToCopy.select()
+
+          try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            alert('review was copied ');
+          } catch (err) {
+            alert('Oops, unable to copy');
+          }
+
+          /* unselect the range */
+          testingCodeToCopy.setAttribute('type', 'hidden')
+          window.getSelection().removeAllRanges()
+        },
     }
 };
 </script>
@@ -163,7 +177,7 @@ input[type='radio']{
 }
 
 label{
-  width: 450px;
+  /* width: 450px; */
   max-width: 100%;
   cursor: pointer;
 }

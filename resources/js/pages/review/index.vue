@@ -14,7 +14,7 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>User</th>
+                    <th>Short Dis</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -23,7 +23,7 @@
                 <tbody>
                   <tr v-for="review in reviews">
                     <td>{{review.id}}</td>
-                    <td>{{review.user_id}}</td>
+                    <td>{{review.body | truncate(50, '...')}}</td>
                     <td>{{new Date(review.created_at).toLocaleString()}}</td>
                     <td v-if="review.status"><span class="btn-sm btn-success">Active</span></td>
                     <td v-else><span class="btn-sm btn-danger">Deactive</span></td>
@@ -62,6 +62,15 @@ export default {
     },
     mounted() {
         this.getReviews();
+    },
+    filters: {
+        truncate: function (text, length, suffix) {
+            if (text.length > length) {
+                return text.substring(0, length) + suffix;
+            } else {
+                return text;
+            }
+        },
     },
     methods: {
         async getReviews() {
