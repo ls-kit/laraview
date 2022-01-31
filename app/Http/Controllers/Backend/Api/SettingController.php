@@ -54,13 +54,21 @@ class SettingController extends Controller
             'email' => ['required', 'email'],
             'password' => ['nullable', 'confirmed']
         ]);
+        
+        if(!empty($request->old_password)){
+            if(\Hash::check($request->old_password, auth()->user()->password)){
+                $user = User::find($id);
+                $user->name = $request->name;
+                $user->email = $request->email;
+                $request->password ? $user->password = bcrypt($request->password): '';
+                $user->save();
+                return response($user);
+            }else{
+                return response()->json(['error' => 'Old password is incorrect'], 401);
 
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $request->password ? $user->password = bcrypt($request->password): '';
-        $user->save();
-        return response($user);
+            }
+        }
+
     }
 
     /**

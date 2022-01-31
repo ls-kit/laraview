@@ -30,6 +30,15 @@
                             </div>
                             <div class="row align-items-center mb-3">
                                 <div class="col-4">
+                                    <label for="name" class="col-form-label w-100">Old Password</label>
+                                </div>
+                                <div class="col-8">
+                                <input type="password" v-model="form.old_password" class="form-control" placeholder="old Password">
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center mb-3">
+                                <div class="col-4">
                                     <label for="name" class="col-form-label w-100">Password</label>
                                 </div>
                                 <div class="col-8">
@@ -62,46 +71,45 @@
     </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
-data() {
+  data() {
     return {
-        uid:'',
-        form: {
-            name: '',
-            email: '',
-            password: '',
-            password_confirmation: ''
-        }
-    }
-},
-mounted() {
+      uid: "",
+      form: {
+        name: "",
+        email: "",
+        old_password: "",
+        password: "",
+        password_confirmation: "",
+      },
+    };
+  },
+  mounted() {
     this.getSettings();
-},
-methods: {
+  },
+  methods: {
     getSettings() {
-        axios.get('/api/setting').then((res) => {
-            this.form.name = res.data.name
-            this.form.email = res.data.email
-            this.uid = res.data.id
-        });
+      axios.get("/api/setting").then((res) => {
+        this.form.name = res.data.name;
+        this.form.email = res.data.email;
+        this.uid = res.data.id;
+      });
     },
     handleForm() {
-        axios.put('/api/setting/'+this.uid, this.form).then((res) => {
-            Toast.fire({
-                icon: "success",
-                title: "Settings Updated!",
-            });
-            this.form.name = res.data.name
-            this.form.email = res.data.email
-            this.uid = res.data.id
-            this.form.password = '',
-            this.form.password_confirmation = ''
+      axios.put("/api/setting/" + this.uid, this.form).then((res) => {
+        Toast.fire({
+          icon: "success",
+          title: "Settings Updated!",
         });
-    }
-}
-}
+        this.form.name = res.data.name;
+        this.form.email = res.data.email;
+        this.uid = res.data.id;
+        (this.form.password = ""), (this.form.password_confirmation = "");
+      });
+    },
+  },
+};
 </script>
 <style lang="">
-
 </style>

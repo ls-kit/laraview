@@ -60,7 +60,7 @@ export default {
     },
     async handleForm() {
       await axios.post("/api/review", this.form).then((res) => {
-        console.log(res);
+        this.form.review_body = "";
         Toast.fire({
           icon: "success",
           title: "Review added!",

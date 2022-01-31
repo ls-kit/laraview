@@ -6,6 +6,7 @@ import CreateReview from "./pages/review/create.vue";
 import GenerateReview from "./pages/generate-review";
 import Setting from "./pages/setting";
 import UpdateReview from "./pages/review/update";
+import PageNotFound from "./pages/404/404";
 const router = new VueRouter({
     mode: "history",
     routes:
@@ -45,7 +46,11 @@ const router = new VueRouter({
             path: '/setting',
             component: Setting,
             meta: {requiresAuth: true}
-        }
+        },
+       {
+           path: '*',
+           redirect: '/404'
+       }
     ]
 })
 

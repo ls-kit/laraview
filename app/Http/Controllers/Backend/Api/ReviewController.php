@@ -40,7 +40,7 @@ class ReviewController extends Controller
             $arr2 = $datas;
             sort($arr1);
             sort($arr2);
-            
+
             if($arr1 == $arr2){
                 $filterdData[] = $review;
             }
@@ -51,6 +51,7 @@ class ReviewController extends Controller
         return $filterdData;
 
     }
+    
     /**
      * Display a listing of the resource.
      *
