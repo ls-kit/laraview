@@ -19,8 +19,7 @@ Route::get('/', function () {
     return redirect(url('/login'));
 });
 
-Auth::routes();
-
+Auth::routes(['register' => false]);
 /*
 |--------------------------------------------------------------------------
 | Backend routes
