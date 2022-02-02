@@ -285,6 +285,11 @@ return [
             'icon'        => 'fas fa-user-shield',
         ],
         [
+            'text'        => 'Users',
+            'url'         => '/users',
+            'icon'        => 'fas fa-user-shield',
+        ],
+        [
             'text'        => 'Setting',
             'url'         => '/setting',
             'icon'        => 'fas fa-cog',

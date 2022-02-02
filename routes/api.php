@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('review-search', [ReviewController::class, 'reviewSearch']);
     Route::apiResource('review', ReviewController::class);
     Route::post('/register-user', [RegisterController::class, 'index']);
+    Route::get('/get-users', [RegisterController::class, 'getUsers']);
+    Route::get('/delete-user/{id}', [RegisterController::class, 'deleteUser']);
 });
 
 Route::get('check-auth', [CheckAuthController::class, 'index']);

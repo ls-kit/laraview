@@ -1,108 +1,94 @@
 <template lang="">
     <div>
-<!-- Main content -->
 <section class="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Register user</h3>
-                    </div>
-                    <form @submit.prevent="handleForm">
-                        <div class="card-body">
-
-                            <div class="row align-items-center mb-3">
-                                <div class="col-4">
-                                    <label for="name" class="col-form-label w-100">Name</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" id="name" v-model="form.name" class="form-control" placeholder="Change Name">
-                                </div>
-                            </div>
-                            <div class="row align-items-center mb-3">
-                                <div class="col-4">
-                                    <label for="name" class="col-form-label w-100">Email</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" v-model="form.email" id="name" class="form-control" placeholder="Change Email">
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-3">
-                                <div class="col-4">
-                                    <label for="name" class="col-form-label w-100">User Type</label>
-                                </div>
-                                <div class="col-8">
-                                    <select class="form-control" v-model="form.user_type">
-                                        <option value="0" selected >User</option>
-                                        <option value="1">Admin</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center mb-3">
-                                <div class="col-4">
-                                    <label for="name" class="col-form-label w-100">Password</label>
-                                </div>
-                                <div class="col-8">
-                                <input type="password" v-model="form.password" class="form-control" placeholder="New Password">
-                                </div>
-                            </div>
-                            <div class="row align-items-center mb-3">
-                                <div class="col-4">
-                                    <label for="name" class="col-form-label w-100">Confirem Password</label>
-                                </div>
-                                <div class="col-8">
-                                <input type="password" v-model="form.password_confirmation" class="form-control" placeholder="Retype New Password">
-                                </div>
-                            </div>
-                        <!-- /.card-body -->
-                            </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </form>
-                </div>
-                <!-- /.card -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">User list</h3>
             </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+              <table class="table table-hover text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Short Dis</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="user in users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td v-if="user.is_admin == 1">Admin</td>
+                    <td v-else>User</td>
+                    <td>
+                          <a style="cursor:pointer" class="btn btn-danger"  @click="deleteUser(user.id)">Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
+                    <!-- <pagination :data="users" @pagination-change-page="getResults"></pagination> -->
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
         </div>
-        <!-- /.row -->
+      </div>
+      <!-- /.row -->
     </div>
-    <!-- /.container-fluid -->
-</section>
+  </section>
     </div>
 </template>
 <script>
-import axios from "axios";
 export default {
-  data() {
-    return {
-      form: {
-        name: "",
-        email: "",
-        password: "",
-        user_type: null,
-        password_confirmation: "",
-      },
-    };
-  },
-  methods: {
-    handleForm() {
-      axios.post("/api/register-user", this.form).then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "User has been registered",
-        });
-        this.form.name = "";
-        this.form.email = "";
-        (this.form.password = ""),
-        (this.form.password_confirmation = "");
-      });
+    data() {
+        return {
+            users: [],
+        }
     },
-  },
-};
+    mounted() {
+        this.getUsers();
+    },
+
+    methods: {
+        async getUsers() {
+            await axios.get('/api/get-users').then((res) => {
+                this.users = res.data;
+                // this.users = res.data.data
+            })
+        },
+        deleteUser(id) {
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    axios.get('api/delete-user/' + id).then((res) => {
+                        this.getUsers();
+                    })
+                    Swal.fire(
+                        'Deleted!',
+                        'Your review has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        }
+    }
+}
 </script>
 <style lang="">
+
 </style>

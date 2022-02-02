@@ -34,4 +34,31 @@ class RegisterController extends Controller
         return response($user);
 
     }
+
+    public function getUsers()
+    {
+        if(auth()->user()->is_admin == 1){
+            $users = User::all();
+        }else{
+            return response()->json([
+                'message' => 'You are not authorized to perform this action.'
+            ], 403);
+        }
+
+        return response($users);
+    }
+
+    public function deleteUser($id)
+    {
+        if(auth()->user()->is_admin == 1){
+            $user = User::find($id);
+            $user->delete();
+        }else{
+            return response()->json([
+                'message' => 'You are not authorized to perform this action.'
+            ], 403);
+        }
+
+        return response($user);
+    }
 }
