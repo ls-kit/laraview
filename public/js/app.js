@@ -32966,6 +32966,7 @@ var render = function () {
                                     "a",
                                     {
                                       staticClass: "dropdown-item",
+                                      staticStyle: { cursor: "pointer" },
                                       on: {
                                         click: function ($event) {
                                           return _vm.deleteReview(review.id)

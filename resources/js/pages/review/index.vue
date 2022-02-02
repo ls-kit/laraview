@@ -36,7 +36,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                           <router-link class="dropdown-item" :to="{name: 'update-review',params: {id: review.id}}">Edit</router-link>
-                          <a class="dropdown-item"  @click="deleteReview(review.id)">Delete</a>
+                          <a style="cursor:pointer" class="dropdown-item"  @click="deleteReview(review.id)">Delete</a>
                         </div>
                       </div>
                     </td>
