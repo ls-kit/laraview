@@ -188,7 +188,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '#',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -279,7 +279,11 @@ return [
             'url'         => '/generate-review',
             'icon'        => 'far fa-edit',
         ],
-
+        [
+            'text'        => 'register',
+            'url'         => '/register-user',
+            'icon'        => 'fas fa-user-shield',
+        ],
         [
             'text'        => 'Setting',
             'url'         => '/setting',

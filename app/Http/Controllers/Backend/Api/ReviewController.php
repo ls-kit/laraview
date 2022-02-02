@@ -8,7 +8,6 @@ use App\Models\Review;
 use App\Models\Token;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Concerns\ToArray;
 
 class ReviewController extends Controller
 {
@@ -28,8 +27,8 @@ class ReviewController extends Controller
     {
 
         $datas = collect($request->all())->keys()->toArray();
-        $con = json_encode($datas);
 
+        // $con = json_encode($datas);
         // return Review::where('tokens', $con)->get();
         $reviews = Review::all();
         $filterdData = [];

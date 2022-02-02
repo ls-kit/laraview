@@ -7,6 +7,8 @@ import GenerateReview from "./pages/generate-review";
 import Setting from "./pages/setting";
 import UpdateReview from "./pages/review/update";
 import PageNotFound from "./pages/404/404";
+import RegisterUser from "./pages/register/index";
+
 const router = new VueRouter({
     mode: "history",
     routes:
@@ -45,6 +47,11 @@ const router = new VueRouter({
         {
             path: '/setting',
             component: Setting,
+            meta: {requiresAuth: true}
+        },
+        {
+            path: '/register-user',
+            component: RegisterUser,
             meta: {requiresAuth: true}
         },
        {

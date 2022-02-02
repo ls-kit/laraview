@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\Api\CheckAuthController;
 use App\Http\Controllers\Backend\Api\GenerateReviewController;
+use App\Http\Controllers\Backend\Api\RegisterController;
 use App\Http\Controllers\Backend\Api\ReviewController;
 use App\Http\Controllers\Backend\Api\SettingController;
 use App\Http\Controllers\Backend\Api\TokenController;
@@ -34,6 +35,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('review-list', [ReviewController::class, 'reviewList']);
     Route::post('review-search', [ReviewController::class, 'reviewSearch']);
     Route::apiResource('review', ReviewController::class);
+    Route::post('/register-user', [RegisterController::class, 'index']);
 });
 
 Route::get('check-auth', [CheckAuthController::class, 'index']);

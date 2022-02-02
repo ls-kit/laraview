@@ -7,7 +7,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">All Review List</h3>
-              <button v-if="selected.length > 0" class="btn btn-danger" v-on:click="deleteReview(selected)">Delete</button>
+              <button v-if="selected.length > 0" class="btn btn-danger ml-4" v-on:click="deleteReview(selected)">Delete</button>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -36,7 +36,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                           <router-link class="dropdown-item" :to="{name: 'update-review',params: {id: review.id}}">Edit</router-link>
-                          <a class="dropdown-item" @click="deleteReview(review.id)">Delete</a>
+                          <a class="dropdown-item"  @click="deleteReview(review.id)">Delete</a>
                         </div>
                       </div>
                     </td>
@@ -131,8 +131,6 @@ export default {
             });
         },
     }
-
-
 }
 </script>
 <style lang="">
