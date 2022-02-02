@@ -5870,14 +5870,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      reviews: {}
+      reviews: [],
+      selected: []
     };
   },
   mounted: function mounted() {
     this.getReviews();
+  },
+  computed: {
+    selectAll: {
+      get: function get() {
+        return this.reviews ? this.selected.length == this.reviews.length : false;
+      },
+      set: function set(value) {
+        var selected = [];
+
+        if (value) {
+          this.reviews.forEach(function (review) {
+            selected.push(review.id);
+          });
+        }
+
+        this.selected = selected;
+      }
+    }
   },
   filters: {
     truncate: function truncate(text, length, suffix) {
@@ -32217,20 +32238,132 @@ var render = function () {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-12" }, [
             _c("div", { staticClass: "card" }, [
-              _vm._m(0),
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("All Review List"),
+                ]),
+                _vm._v(" "),
+                _vm.selected.length > 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function ($event) {
+                            return _vm.deleteReview(_vm.selected)
+                          },
+                        },
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  : _vm._e(),
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "card-body table-responsive p-0" }, [
                 _c(
                   "table",
                   { staticClass: "table table-hover text-nowrap" },
                   [
-                    _vm._m(1),
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [
+                          _vm._v("ID "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectAll,
+                                expression: "selectAll",
+                              },
+                            ],
+                            attrs: { type: "checkbox" },
+                            domProps: {
+                              checked: Array.isArray(_vm.selectAll)
+                                ? _vm._i(_vm.selectAll, null) > -1
+                                : _vm.selectAll,
+                            },
+                            on: {
+                              change: function ($event) {
+                                var $$a = _vm.selectAll,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = null,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selectAll = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selectAll = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.selectAll = $$c
+                                }
+                              },
+                            },
+                          }),
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Short Dis")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Date")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Status")]),
+                        _vm._v(" "),
+                        _c("th", [_vm._v("Actions")]),
+                      ]),
+                    ]),
                     _vm._v(" "),
                     _c(
                       "tbody",
                       _vm._l(_vm.reviews, function (review) {
                         return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(review.id))]),
+                          _c("td", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.selected,
+                                  expression: "selected",
+                                },
+                              ],
+                              attrs: { type: "checkbox", number: "" },
+                              domProps: {
+                                value: review.id,
+                                checked: Array.isArray(_vm.selected)
+                                  ? _vm._i(_vm.selected, review.id) > -1
+                                  : _vm.selected,
+                              },
+                              on: {
+                                change: function ($event) {
+                                  var $$a = _vm.selected,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = review.id,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        (_vm.selected = $$a.concat([$$v]))
+                                    } else {
+                                      $$i > -1 &&
+                                        (_vm.selected = $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1)))
+                                    }
+                                  } else {
+                                    _vm.selected = $$c
+                                  }
+                                },
+                              },
+                            }),
+                            _vm._v(" " + _vm._s(review.id)),
+                          ]),
                           _vm._v(" "),
                           _c("td", [
                             _vm._v(
@@ -32345,34 +32478,7 @@ var render = function () {
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("All Review List")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Short Dis")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Status")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")]),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -7,13 +7,14 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">All Review List</h3>
+              <button v-if="selected.length > 0" class="btn btn-danger" v-on:click="deleteReview(selected)">Delete</button>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
               <table class="table table-hover text-nowrap">
                 <thead>
                   <tr>
-                    <th>ID</th>
+                    <th>ID <input type="checkbox" v-model="selectAll"></th>
                     <th>Short Dis</th>
                     <th>Date</th>
                     <th>Status</th>
@@ -22,7 +23,8 @@
                 </thead>
                 <tbody>
                   <tr v-for="review in reviews">
-                    <td>{{review.id}}</td>
+
+                    <td> <input type="checkbox" v-model="selected" :value="review.id" number> {{review.id}}</td>
                     <td>{{review.body | truncate(50, '...')}}</td>
                     <td>{{new Date(review.created_at).toLocaleString()}}</td>
                     <td v-if="review.status"><span class="btn-sm btn-success">Active</span></td>
@@ -57,11 +59,30 @@
 export default {
     data() {
         return {
-            reviews: {}
+            reviews: [],
+            selected: []
         }
     },
     mounted() {
         this.getReviews();
+    },
+     computed: {
+        selectAll: {
+            get: function () {
+                return this.reviews ? this.selected.length == this.reviews.length : false;
+            },
+            set: function (value) {
+                var selected = [];
+
+                if (value) {
+                    this.reviews.forEach(function (review) {
+                        selected.push(review.id);
+                    });
+                }
+
+                this.selected = selected;
+            }
+        }
     },
     filters: {
         truncate: function (text, length, suffix) {

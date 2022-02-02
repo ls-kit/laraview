@@ -51,7 +51,7 @@ class ReviewController extends Controller
         return $filterdData;
 
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -123,9 +123,13 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        Review::find($id)->delete();
+        $ids = explode(',', $ids);
+        foreach($ids as $i){
+            $review = Review::find($i);
+            $review->delete();
+        }
         return response(['message' => 'success']);
     }
 }
